@@ -71,7 +71,7 @@ unsigned int acquisitionManagerInit(void)
 	for (i = 0; i < PRODUCER_COUNT; i++)
 	{
 		//Start the 4 thread
-		pthread_create(producers+i,NULL,&produce,NULL);
+		pthread_create(producers+i,NULL,produce,NULL);
 		printf("[acquisitionManager]Thread Created.\n");
 	}
 
@@ -103,6 +103,6 @@ void *produce(void* params)
 		//recuperer la valeur
 		//getInput(i,....);
 	}
-	//printf("[acquisitionManager] %d termination\n", &produceId);
+	printf("[acquisitionManager] %d termination\n", &produceId);
 	//TODO
 }
