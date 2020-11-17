@@ -93,7 +93,7 @@ void acquisitionManagerJoin(void)
 void *produce(void* params)
 {
 	pid_t produceId = gettid();
-	printf("[acquisitionManager]Producer created with id %d\n", &produceId);
+	printf("[acquisitionManager]Producer created with id %ls \n", &produceId);
 	unsigned int i = 0;
 	while (i < PRODUCER_LOOP_LIMIT)
 	{
@@ -102,6 +102,6 @@ void *produce(void* params)
 		//recuperer la valeur
 		//getInput(i,....);
 	}
-	printf("[acquisitionManager] %d termination\n", &produceId);
+	printf("[acquisitionManager] %ls termination\n", &produceId);
 	//TODO
 }
