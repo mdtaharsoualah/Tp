@@ -103,6 +103,6 @@ void *produce(void* params)
 		//recuperer la valeur
 		//getInput(i,....);
 	}
-	printf("[acquisitionManager] %d termination\n", &produceId);
+	//printf("[acquisitionManager] %d termination\n", &produceId);
 	//TODO
 }
