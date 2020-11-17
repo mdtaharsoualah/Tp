@@ -30,8 +30,8 @@ static void *produce(void *params);
 sem_t bufferLibreSemaphores;
 sem_t bufferPrisSemaphores;
 
-pthread_mutex_t produceCountMutex;
-pthread_mutex_t bufferMutex;
+pthread_mutex_t produceCountMutex=PTHREAD_MUTEX_INITIALIZER;
+pthread_mutex_t bufferMutex=PTHREAD_MUTEX_INITIALIZER;
 
 
 //TODO
@@ -52,12 +52,8 @@ static unsigned int createSynchronizationObjects(void)
 	//Initialisation Semaphores
 	if(sem_init(&bufferLibreSemaphores,0,256) != -1){
 		if(sem_init(&bufferPrisSemaphores,0,256) != -1){
-			if(produceCountMutex=PTHREAD_MUTEX_INITIALIZER){
-				if(bufferMutex=PTHREAD_MUTEX_INITIALIZER){
-					printf("[acquisitionManager]Semaphore created\n");
-					return ERROR_SUCCESS;
-				}
-			}
+			printf("[acquisitionManager]Semaphore created\n");
+			return ERROR_SUCCESS;
 		}
 	}
 	return ERROR_INIT;
