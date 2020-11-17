@@ -93,6 +93,7 @@ void acquisitionManagerJoin(void)
 
 void *produce(void* params)
 {
+	_syscall0(pid_t, gettid);
 	pid_t produceId = gettid();
 	D(printf("[acquisitionManager]Producer created with id %d\n", &produceId));
 	unsigned int i = 0;
