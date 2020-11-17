@@ -105,7 +105,8 @@ void *produce(void* params)
 		//recuperer la valeur
 		getInput(1,Buffer);
 	}
-	printf("[Data]  %d \n", Buffer[0].checksum);
+	//printf("[Data]  %d \n", Buffer[0].checksum);
+	messageCheck(Buffer[0]);
 	printf("[acquisitionManager] %d termination\n", &produceId);
 	//TODO
 }
