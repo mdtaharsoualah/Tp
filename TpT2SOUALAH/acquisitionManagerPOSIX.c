@@ -10,6 +10,7 @@
 #include "mySoftware.h"
 #include "iAcquisitionManager.h"
 #include "debug.h"
+#include <sys/types.h>
 
 
 //producer count storage
@@ -98,7 +99,7 @@ void *produce(void* params)
 		i++;
 		sleep(PRODUCER_SLEEP_TIME+(rand() % 5));
 		//recuperer la valeur
-		getInput(i,....);
+		//getInput(i,....);
 	}
 	printf("[acquisitionManager] %d termination\n", gettid());
 	//TODO
