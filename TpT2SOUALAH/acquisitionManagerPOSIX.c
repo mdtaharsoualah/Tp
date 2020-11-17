@@ -106,7 +106,7 @@ void *produce(void* params)
 		getInput(1,Buffer);
 	}
 	//printf("[Data]  %d \n", Buffer[0].checksum);
-	messageCheck(Buffer[0]);
+	messageCheck(Buffer);
 	printf("[acquisitionManager] %d termination\n", &produceId);
 	//TODO
 }
