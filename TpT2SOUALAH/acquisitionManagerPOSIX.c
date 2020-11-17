@@ -26,6 +26,14 @@ static void *produce(void *params);
 /**
 * Semaphores and Mutex
 */
+
+sem_t bufferLibreSemaphores;
+sem_t bufferPrisSemaphores;
+
+pthread_mutex_t produceCountMutex;
+pthread_mutex_t bufferMutex;
+
+
 //TODO
 
 /*
@@ -41,21 +49,34 @@ static void incrementProducerCount(void);
 
 static unsigned int createSynchronizationObjects(void)
 {
-
-	//TODO
-	printf("[acquisitionManager]Semaphore created\n");
-	return ERROR_SUCCESS;
+	//Initialisation Semaphores
+	if(sem_init(&bufferLibreSemaphores,0,256) != -1){
+		if(sem_init(&bufferPrisSemaphores,0,256) != -1){
+			if(produceCountMutex=PTHREAD_MUTEX_INITIALIZER){
+				if(bufferMutex=PTHREAD_MUTEX_INITIALIZER){
+					printf("[acquisitionManager]Semaphore created\n");
+					return ERROR_SUCCESS;
+				}
+			}
+		}
+	}
+	return ERROR_INIT;
+	
 }
 
 static void incrementProducerCount(void)
 {
-	//TODO
+	pthread_mutex_lock(&produceCountMutex);
+	produceCount++;
+	pthread_mutex_unlock(&produceCountMutex);
 }
 
 unsigned int getProducerCount(void)
 {
 	unsigned int p = 0;
-	//TODO
+	pthread_mutex_lock(&produceCountMutex);
+	p=produceCount;
+	pthread_mutex_unlock(&produceCountMutex);
 	return p;
 }
 
@@ -74,7 +95,7 @@ unsigned int acquisitionManagerInit(void)
 	for (i = 0; i < PRODUCER_COUNT; i++)
 	{
 		//Start the 4 thread
-		pthread_create(&producers[i],NULL,&produce,NULL);
+		pthread_create(&producers[i],NULL,&produce,i);
 	}
 
 	return ERROR_SUCCESS;
@@ -95,7 +116,7 @@ void acquisitionManagerJoin(void)
 
 void *produce(void* params)
 {
-	pid_t produceId = syscall(SYS_gettid);
+	unsigned int produceId = syscall(SYS_gettid);
 	printf("[acquisitionManager]Producer created with id %d \n", &produceId);
 	unsigned int i = 0;
 	while (i < PRODUCER_LOOP_LIMIT)
@@ -104,9 +125,10 @@ void *produce(void* params)
 		sleep(PRODUCER_SLEEP_TIME+(rand() % 5));
 		//recuperer la valeur
 		getInput(1,Buffer);
+		if(messageCheck(Buffer))
+			break;
 	}
-	//printf("[Data]  %d \n", Buffer[0].checksum);
-	messageCheck(Buffer);
+	
 	printf("[acquisitionManager] %d termination\n", &produceId);
 	//TODO
 }
