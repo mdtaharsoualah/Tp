@@ -72,6 +72,7 @@ unsigned int acquisitionManagerInit(void)
 	{
 		//Start the 4 thread
 		pthread_create(producers+i,NULL,&produce,NULL);
+		printf("[acquisitionManager]Thread Created.\n");
 	}
 
 	return ERROR_SUCCESS;
@@ -92,7 +93,8 @@ void acquisitionManagerJoin(void)
 
 void *produce(void* params)
 {
-	D(printf("[acquisitionManager]Producer created with id %d\n", gettid()));
+	int produceId = gettid();
+	D(printf("[acquisitionManager]Producer created with id %d\n", &produceId));
 	unsigned int i = 0;
 	while (i < PRODUCER_LOOP_LIMIT)
 	{
@@ -101,6 +103,6 @@ void *produce(void* params)
 		//recuperer la valeur
 		//getInput(i,....);
 	}
-	printf("[acquisitionManager] %d termination\n", gettid());
+	printf("[acquisitionManager] %d termination\n", &produceId);
 	//TODO
 }
