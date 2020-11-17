@@ -92,7 +92,7 @@ void acquisitionManagerJoin(void)
 
 void *produce(void* params)
 {
-	pid_t produceId = gettid();
+	pid_t produceId = syscall(SYS_gettid);
 	printf("[acquisitionManager]Producer created with id %ls \n", &produceId);
 	unsigned int i = 0;
 	while (i < PRODUCER_LOOP_LIMIT)
