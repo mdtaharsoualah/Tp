@@ -11,6 +11,7 @@
 #include "iAcquisitionManager.h"
 #include "debug.h"
 #include <sys/types.h>
+#include <linux/syscalls.h>
 
 
 //producer count storage
