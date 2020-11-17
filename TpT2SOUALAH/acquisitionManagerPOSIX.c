@@ -19,6 +19,8 @@ volatile unsigned int produceCount = 0;
 
 pthread_t producers[4];
 
+MSG_BLOCK Buffer[256];
+
 static void *produce(void *params);
 
 /**
@@ -101,8 +103,9 @@ void *produce(void* params)
 		i++;
 		sleep(PRODUCER_SLEEP_TIME+(rand() % 5));
 		//recuperer la valeur
-		//getInput(i,....);
+		getInput(1,Buffer);
 	}
+	printf("[Data]  %d \n", Buffer[0].checksum);
 	printf("[acquisitionManager] %d termination\n", &produceId);
 	//TODO
 }
