@@ -53,7 +53,7 @@ static void CalculSum(MSG_BLOCK *msg)
 	pthread_mutex_lock(&SumMutex);
 	messageAdd(&out, msg);
 	pthread_mutex_unlock(&SumMutex);
-	incrementConsumeCount++;
+	incrementConsumeCount();
 }
 
 void getSum(MSG_BLOCK *msg)
