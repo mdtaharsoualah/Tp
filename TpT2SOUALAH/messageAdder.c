@@ -91,7 +91,7 @@ static void *sum( void *parameters )
 		i++;
 		sleep(ADDER_SLEEP_TIME);
 		//TODO
-		tmpMsg=ReadAcquisMessage();
+		ReadAcquisMessage(&tmpMsg);
 		CalculSum(&tmpMsg);
 		printf("[messageAdder] Message %d lue\n", iddd);
 	}

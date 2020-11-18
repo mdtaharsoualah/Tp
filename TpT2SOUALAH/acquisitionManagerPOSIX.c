@@ -92,15 +92,13 @@ int BufferWriteId(MSG_BLOCK msg){
 	return p;
 }
 
-MSG_BLOCK ReadMessage(){
-	MSG_BLOCK tmpMsg;
+void ReadAcquisMessage(MSG_BLOCK* msg){
 	sem_wait(&bufferLibreSemaphores);
 	pthread_mutex_lock(&produceCountMutex);
-		tmpMsg=Buffer[BufferIdRead];
+		*Msg=Buffer[BufferIdRead];
 		BufferIdRead=(BufferIdRead==255) ? 0 : BufferIdRead+1;
 	pthread_mutex_unlock(&produceCountMutex);
 	sem_post(&bufferPrisSemaphores);
-	return tmpMsg;
 }
 
 
