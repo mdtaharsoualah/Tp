@@ -48,13 +48,15 @@ void messageAdderJoin(void){
 static void *sum( void *parameters )
 {
 	unsigned int produceId = syscall(SYS_gettid);
+	int iddd;
 	printf("[messageAdder]Thread created for sum with id %d\n", produceId);
 	unsigned int i = 0;
 	while(i<ADDER_LOOP_LIMIT){
 		i++;
 		sleep(ADDER_SLEEP_TIME);
 		//TODO
-		ReadMessage(&out);
+		iddd=ReadMessage(&out);
+		printf("[messageAdder] Message %d lue\n", iddd);
 	}
 	printf("[messageAdder] %d termination\n", produceId);
 	//TODO
