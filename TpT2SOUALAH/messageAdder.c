@@ -30,7 +30,7 @@ static void *sum( void *parameters );
 //TODO create accessors to limit semaphore and mutex usage outside of this C module.
 
 void messageAdderInit(void){
-	sum(NULL);
+	pthread_create(&consumer,NULL,&sum,NULL);
 	out.checksum = 0;
 	for (size_t i = 0; i < DATA_SIZE; i++)
 	{
@@ -40,6 +40,7 @@ void messageAdderInit(void){
 
 void messageAdderJoin(void){
 	//TODO
+	pthread_join(consumer,NULL);
 }
 
 static void *sum( void *parameters )
@@ -51,7 +52,7 @@ static void *sum( void *parameters )
 		i++;
 		sleep(ADDER_SLEEP_TIME);
 		//TODO
-		ReadMessage(&tmpMsg);
+		ReadMessage(&out);
 	}
 	printf("[messageAdder] %d termination\n", gettid());
 	//TODO
