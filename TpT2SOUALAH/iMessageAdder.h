@@ -5,5 +5,7 @@
 
 
 //TODO create accessors prototype here.
+void getSum(MSG_BLOCK *msg);
+unsigned int getConsumeCount(void);
 
 #endif

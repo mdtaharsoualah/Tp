@@ -5,4 +5,7 @@
 
 //TODO create accessors prototype here.
 
+void ReadAcquisMessage(MSG_BLOCK*);
+unsigned int getProducerCount(void);
+
 #endif

@@ -8,6 +8,8 @@
 #include "msg.h"
 #include "mySoftware.h"
 #include "debug.h"
+#include <sys/types.h>
+#include <sys/syscall.h>
 
 // DisplayManager thread.
 pthread_t displayThread;
@@ -19,21 +21,25 @@ static void *display( void *parameters );
 
 
 void displayManagerInit(void){
-	//TODO
+	pthread_create(&displayThread,NULL,&display,NULL);
 }
 
 void displayManagerJoin(void){
-	//TODO	
+	pthread_join(displayThread,NULL);
 } 
 
 static void *display( void *parameters )
 {
-	D(printf("[displayManager]Thread created for display with id %d\n", gettid()));
+	MSG_BLOCK tmpOut;
+	unsigned int displayId = syscall(SYS_gettid);
+	printf("[displayManager]Thread created for display with id %d\n", displayId);
 	unsigned int diffCount = 0;
 	while(diffCount < DISPLAY_LOOP_LIMIT){
 		sleep(DISPLAY_SLEEP_TIME);
+		getSum(&tmpOut);
+		messageDisplay(&tmpOut);
 		//TODO
 	}
-	printf("[displayManager] %d termination\n", gettid());
+	printf("[displayManager] %d termination\n", displayId);
    //TODO
 }

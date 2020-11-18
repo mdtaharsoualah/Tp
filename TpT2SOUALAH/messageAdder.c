@@ -55,13 +55,12 @@ static void CalculSum(MSG_BLOCK *msg)
 	pthread_mutex_unlock(&SumMutex);
 }
 
-MSG_BLOCK getSum(void)
+void getSum(MSG_BLOCK *msg)
 {
 	MSG_BLOCK p;
 	pthread_mutex_lock(&SumMutex);
-	p=out;
+	*msg=out;
 	pthread_mutex_unlock(&SumMutex);
-	return p;
 }
 
 void messageAdderInit(void){
@@ -91,7 +90,7 @@ static void *sum( void *parameters )
 		i++;
 		sleep(ADDER_SLEEP_TIME);
 		//TODO
-		ReadAcquisMessage(&tmpMsg);
+		iddd=ReadAcquisMessage(&tmpMsg);
 		CalculSum(&tmpMsg);
 		printf("[messageAdder] Message %d lue\n", iddd);
 	}
