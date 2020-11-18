@@ -7,8 +7,8 @@ void messageDisplay(volatile MSG_BLOCK* mBlock){
 	unsigned int i; 
 	messageCheck(mBlock);
 	printf("Message\n");
-	printf("[");
+	D(printf("["));
 	for(i=0;i < DATA_SIZE;i++)
-		printf("%u ",mBlock->mData[i]);
-	printf("]\n");
+		D(printf("%u ",mBlock->mData[i]));
+	D(printf("]\n"));
 }

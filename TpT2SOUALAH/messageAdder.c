@@ -84,7 +84,7 @@ static void *sum( void *parameters )
 	MSG_BLOCK tmpMsg;
 	unsigned int produceId = syscall(SYS_gettid);
 	int iddd;
-	printf("[messageAdder]Thread created for sum with id %d\n", produceId);
+	D(printf("[messageAdder]Thread created for sum with id %d\n", produceId));
 	unsigned int i = 0;
 	while(i<ADDER_LOOP_LIMIT){
 		i++;
