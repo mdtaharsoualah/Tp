@@ -31,7 +31,7 @@ void displayManagerJoin(void){
 static void *display( void *parameters )
 {
 	MSG_BLOCK tmpOut;
-	unsigned int ConsumeCount=0, ProducerCount=0, Diff=0;
+	unsigned int ConsumeCount=0, ProducerCount=0;
 	unsigned int displayId = syscall(SYS_gettid);
 	D(printf("[displayManager]Thread created for display with id %d\n", displayId));
 	unsigned int diffCount = 0;
@@ -40,9 +40,9 @@ static void *display( void *parameters )
 		getSum(&tmpOut);
 		ConsumeCount=getConsumeCount();
 		ProducerCount= getProducerCount();
-		Diff=ProducerCount-ConsumeCount;
+		diffCount=ProducerCount-ConsumeCount;
 		messageDisplay(&tmpOut);
-		printf("Messages recu : %4d  Messages somme : %4d Messages Restant : %4d \n", ProducerCount, ConsumeCount, Diff);
+		printf("Messages recu : %4d  Messages somme : %4d Messages Restant : %4d \n", ProducerCount, ConsumeCount, diffCount);
 
 		//TODO
 	}
