@@ -149,7 +149,7 @@ void *produce(void* params)
 {
 	int BufId=-1;
 	MSG_BLOCK tmpMsg;
-	unsigned int produceId = (unsigned int)params;//syscall(SYS_gettid);
+	unsigned int produceId = syscall(SYS_gettid);
 	printf("[acquisitionManager]Producer created with id %d \n", produceId);
 	unsigned int i = 0;
 	while (i < PRODUCER_LOOP_LIMIT)
