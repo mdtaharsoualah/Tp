@@ -30,6 +30,7 @@ static void *sum( void *parameters );
 //TODO create accessors to limit semaphore and mutex usage outside of this C module.
 
 void messageAdderInit(void){
+	sum();
 	out.checksum = 0;
 	for (size_t i = 0; i < DATA_SIZE; i++)
 	{
