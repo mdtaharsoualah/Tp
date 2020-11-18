@@ -50,7 +50,7 @@ static void *sum( void *parameters )
 		i++;
 		sleep(ADDER_SLEEP_TIME);
 		//TODO
-		tmpMsg=ReadMessage();
+		ReadMessage(&tmpMsg);
 	}
 	printf("[messageAdder] %d termination\n", gettid());
 	//TODO
