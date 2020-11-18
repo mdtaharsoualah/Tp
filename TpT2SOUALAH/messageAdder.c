@@ -9,6 +9,8 @@
 #include "mySoftware.h"
 #include "iAcquisitionManager.h"
 #include "debug.h"
+#include <sys/types.h>
+#include <sys/syscall.h>
 
 //consumer thread
 pthread_t consumer;
