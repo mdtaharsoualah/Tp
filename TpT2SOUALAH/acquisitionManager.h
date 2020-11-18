@@ -11,6 +11,7 @@ unsigned int acquisitionManagerInit(void);
 */
 
 void ReadMessage(MSG_BLOCK* msg);
+unsigned int getProducerCount(void);
 
 /**
 * Waits that acquisitions terminate

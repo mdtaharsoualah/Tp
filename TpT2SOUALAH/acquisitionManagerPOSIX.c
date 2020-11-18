@@ -163,6 +163,7 @@ void *produce(void* params)
 			getInput(1,&tmpMsg);
 			if(messageCheck(&tmpMsg)){
 				Buffer[BufId]=tmpMsg;
+				incrementProducerCount();
 				printf("[acquisitionManager] %d a recu un message stocké a %d\n", produceId, BufId);
 			}
 		}
