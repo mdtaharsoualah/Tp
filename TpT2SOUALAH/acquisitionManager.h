@@ -7,6 +7,12 @@
 unsigned int acquisitionManagerInit(void);
 
 /**
+* Read Message
+*/
+
+MSG_BLOCK ReadMessage();
+
+/**
 * Waits that acquisitions terminate
 */
 void acquisitionManagerJoin(void);

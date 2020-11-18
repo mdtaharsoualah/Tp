@@ -43,12 +43,14 @@ void messageAdderJoin(void){
 
 static void *sum( void *parameters )
 {
-	D(printf("[messageAdder]Thread created for sum with id %d\n", gettid()));
+	MSG_BLOCK tmpMsg;
+	printf("[messageAdder]Thread created for sum with id %d\n", gettid());
 	unsigned int i = 0;
 	while(i<ADDER_LOOP_LIMIT){
 		i++;
 		sleep(ADDER_SLEEP_TIME);
 		//TODO
+		tmpMsg=ReadMessage();
 	}
 	printf("[messageAdder] %d termination\n", gettid());
 	//TODO
