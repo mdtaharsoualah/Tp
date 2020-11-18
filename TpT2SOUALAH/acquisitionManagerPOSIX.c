@@ -19,9 +19,11 @@ volatile unsigned int produceCount = 0;
 
 pthread_t producers[4];
 
-MSG_BLOCK Buffer[256];
+MSG_BLOCK Buffer[256]={0};
 
 static void *produce(void *params);
+int BufferIdWrite=0;
+int BufferIdRead=0;
 
 /**
 * Semaphores and Mutex
@@ -50,7 +52,7 @@ static void incrementProducerCount(void);
 static unsigned int createSynchronizationObjects(void)
 {
 	//Initialisation Semaphores
-	if(sem_init(&bufferLibreSemaphores,0,256) != -1){
+	if(sem_init(&bufferLibreSemaphores,0,0) != -1){
 		if(sem_init(&bufferPrisSemaphores,0,256) != -1){
 			printf("[acquisitionManager]Semaphore created\n");
 			return ERROR_SUCCESS;
@@ -77,6 +79,28 @@ unsigned int getProducerCount(void)
 }
 
 //TODO create accessors to limit semaphore and mutex usage outside of this C module.
+
+int BufferWriteId(){
+	int p = 0;
+	sem_wait(&bufferPrisSemaphores);
+	sem_post(&bufferLibreSemaphores);
+	pthread_mutex_lock(&produceCountMutex);
+		p=BufferIdWrite;
+		BufferIdWrite=(BufferIdWrite==255) ? 0 : BufferIdWrite+1;
+	pthread_mutex_unlock(&produceCountMutex);
+	return p;
+}
+
+int BufferReadId(){
+	int p = 0;
+	sem_wait(&bufferLibreSemaphores);
+	sem_post(&bufferPrisSemaphores);
+	pthread_mutex_lock(&produceCountMutex);
+		p=BufferIdRead;
+		BufferIdRead=(BufferIdRead==255) ? 0 : BufferIdRead+1;
+	pthread_mutex_unlock(&produceCountMutex);
+	return p;
+}
 
 unsigned int acquisitionManagerInit(void)
 {
@@ -107,11 +131,15 @@ void acquisitionManagerJoin(void)
 	}
 
 	//TODO
+	sem_destory(&bufferLibreSemaphores);
+	sem_destory(&bufferPrisSemaphores);
 	printf("[acquisitionManager]Semaphore cleaned\n");
 }
 
 void *produce(void* params)
 {
+	int BufId=-1;
+	MSG_BLOCK tmpMsg;
 	unsigned int produceId = syscall(SYS_gettid);
 	printf("[acquisitionManager]Producer created with id %d \n", &produceId);
 	unsigned int i = 0;
@@ -120,9 +148,15 @@ void *produce(void* params)
 		i++;
 		sleep(PRODUCER_SLEEP_TIME+(rand() % 5));
 		//recuperer la valeur
-		getInput(1,Buffer);
-		if(messageCheck(Buffer))
-			break;
+		//Demander un id au Buffer
+		BufId=BufferWriteId();
+		if(BufId!=-1){
+			getInput(1,&tmpMsg);
+			if(messageCheck(&tmpMsg)){
+				Buffer[BufId]=tmpMsg;
+				printf("[acquisitionManager] %d a recu un message\n", &produceId);
+			}
+		}
 	}
 	
 	printf("[acquisitionManager] %d termination\n", &produceId);
