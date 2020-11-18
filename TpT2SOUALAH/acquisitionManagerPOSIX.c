@@ -102,12 +102,12 @@ int BufferReadId(){
 	return p;
 }
 
-MSG_BLOCK ReadMessage(){
+void ReadMessage(MSG_BLOCK* msg){
 	int BufId=-1;
 	BufId=BufferReadId();
 	if(BufId!=-1){
 		printf("[acquisitionManager] Message %d lue\n", BufId);
-		return Buffer[BufId];
+		msg*=Buffer[BufId];
 	}
 }
 
