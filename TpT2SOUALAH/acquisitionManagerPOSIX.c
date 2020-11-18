@@ -107,7 +107,7 @@ void ReadMessage(MSG_BLOCK* msg){
 	BufId=BufferReadId();
 	if(BufId!=-1){
 		printf("[acquisitionManager] Message %d lue\n", BufId);
-		msg*=Buffer[BufId];
+		*msg=Buffer[BufId];
 	}
 }
 
