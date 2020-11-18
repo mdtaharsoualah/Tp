@@ -42,7 +42,7 @@ static void *display( void *parameters )
 		ProducerCount= getProducerCount();
 		Diff=ProducerCount-ConsumeCount;
 		messageDisplay(&tmpOut);
-		printf("Messages recu : %4d  Messages somme : %4d Messages Restant : %4d", ProducerCount, ConsumeCount, Diff);
+		printf("Messages recu : %4d  Messages somme : %4d Messages Restant : %4d \n", ProducerCount, ConsumeCount, Diff);
 
 		//TODO
 	}

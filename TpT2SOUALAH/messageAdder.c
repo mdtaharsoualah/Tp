@@ -93,7 +93,7 @@ static void *sum( void *parameters )
 		//TODO
 		iddd=ReadAcquisMessage(&tmpMsg);
 		CalculSum(&tmpMsg);
-		printf("[messageAdder] Message %d lue\n", iddd);
+		//printf("[messageAdder] Message %d lue\n", iddd);
 	}
 
 	printf("[messageAdder] %d termination\n", produceId);
