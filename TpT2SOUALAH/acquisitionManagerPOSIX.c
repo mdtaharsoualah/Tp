@@ -131,8 +131,8 @@ void acquisitionManagerJoin(void)
 	}
 
 	//TODO
-	sem_destory(&bufferLibreSemaphores);
-	sem_destory(&bufferPrisSemaphores);
+	sem_destroy(&bufferLibreSemaphores);
+	sem_destroy(&bufferPrisSemaphores);
 	printf("[acquisitionManager]Semaphore cleaned\n");
 }
 
