@@ -141,7 +141,7 @@ void *produce(void* params)
 	int BufId=-1;
 	MSG_BLOCK tmpMsg;
 	unsigned int produceId = (unsigned int)params;//syscall(SYS_gettid);
-	printf("[acquisitionManager]Producer created with id %d \n", &produceId);
+	printf("[acquisitionManager]Producer created with id %d \n", produceId);
 	unsigned int i = 0;
 	while (i < PRODUCER_LOOP_LIMIT)
 	{
@@ -154,11 +154,11 @@ void *produce(void* params)
 			getInput(1,&tmpMsg);
 			if(messageCheck(&tmpMsg)){
 				Buffer[BufId]=tmpMsg;
-				printf("[acquisitionManager] %d a recu un message stocké a %d\n", &produceId, &BufId);
+				printf("[acquisitionManager] %d a recu un message stocké a %d\n", produceId, BufId);
 			}
 		}
 	}
 	
-	printf("[acquisitionManager] %d termination\n", &produceId);
+	printf("[acquisitionManager] %d termination\n", produceId);
 	//TODO
 }
