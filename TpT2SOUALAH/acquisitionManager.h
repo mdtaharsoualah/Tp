@@ -5,9 +5,6 @@
 */
 unsigned int acquisitionManagerInit(void);
 
-/**
-* Read Message
-*/
 
 
 /**
