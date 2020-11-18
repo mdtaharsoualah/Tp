@@ -80,7 +80,7 @@ unsigned int getProducerCount(void)
 
 //TODO create accessors to limit semaphore and mutex usage outside of this C module.
 
-int BufferWriteId(){
+int BufferWriteId(MSG_BLOCK msg){
 	int p = 0;
 	sem_wait(&bufferPrisSemaphores);
 	sem_post(&bufferLibreSemaphores);
@@ -88,29 +88,21 @@ int BufferWriteId(){
 		p=BufferIdWrite;
 		BufferIdWrite=(BufferIdWrite==255) ? 0 : BufferIdWrite+1;
 	pthread_mutex_unlock(&produceCountMutex);
+	Buffer[p]=msg;
 	return p;
 }
 
-int BufferReadId(){
-	int p = 0;
+MSG_BLOCK ReadMessage(){
+	MSG_BLOCK tmpMsg;
 	sem_wait(&bufferLibreSemaphores);
-	sem_post(&bufferPrisSemaphores);
 	pthread_mutex_lock(&produceCountMutex);
-		p=BufferIdRead;
+		tmpMsg=Buffer[BufferIdRead];
 		BufferIdRead=(BufferIdRead==255) ? 0 : BufferIdRead+1;
 	pthread_mutex_unlock(&produceCountMutex);
-	return p;
+	sem_post(&bufferPrisSemaphores);
+	return tmpMsg;
 }
 
-int ReadMessage(MSG_BLOCK* msg){
-	int BufId=-1;
-	BufId=BufferReadId();
-	if(BufId!=-1){
-		//printf("[acquisitionManager] Message %d lue\n", BufId);
-		*msg=Buffer[BufId];
-		return BufId;
-	}
-}
 
 unsigned int acquisitionManagerInit(void)
 {
@@ -159,15 +151,11 @@ void *produce(void* params)
 		sleep(PRODUCER_SLEEP_TIME+(rand() % 5));
 		//recuperer la valeur
 		//Demander un id au Buffer
-		BufId=BufferWriteId();
-		if(BufId!=-1){
-			getInput(1,&tmpMsg);
-			if(messageCheck(&tmpMsg)){
-				Buffer[BufId]=tmpMsg;
-				incrementProducerCount();
-				printf("[acquisitionManager] %d a recu un message stocké a %d\n", produceId, BufId);
-			}
-		}
+		getInput((int) params,&tmpMsg);
+		BufId=BufferWriteId(tmpMsg);
+		incrementProducerCount();
+		printf("[acquisitionManager] %d a recu un message stocké a %d\n", produceId, BufId);
+		
 	}
 	
 	printf("[acquisitionManager] %d termination\n", produceId);

@@ -10,7 +10,7 @@ unsigned int acquisitionManagerInit(void);
 * Read Message
 */
 
-int ReadMessage(MSG_BLOCK* msg);
+MSG_BLOCK ReadMessage();
 unsigned int getProducerCount(void);
 
 /**
