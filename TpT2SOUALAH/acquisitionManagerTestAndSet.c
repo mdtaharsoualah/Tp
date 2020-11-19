@@ -64,7 +64,7 @@ static unsigned int createSynchronizationObjects(void)
 
 void pCountLockTake(){
 	int expected = 0;
-	while(!atomic_compare_exchange_weak($lock,$expected,1))
+	while(!atomic_compare_exchange_weak(&lock,&expected,1))
 		expected=0;
 }
 
