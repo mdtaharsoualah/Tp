@@ -9,13 +9,13 @@ global process_names		  # long-lived pid-to-execname mapping
 global mutex_locks;		  # number of locks in progress
 global mutex_stack;		  # flag if we already printed a stack
 
-probe process("/home/fth/Documents/tp_2020/exercice-1/mySoftwareTestAndSet").function("getProducerCount") {
+probe process("../mySoftwareTestAndSet").function("getProducerCount") {
     process_names[pid()] = execname();
     thread_blocktime[tid()] = gettimeofday_us();
 	printf("%s[%d] getProducerCount call detected\n", process_names[pid()], pid())
 }
 
-probe process("/home/fth/Documents/tp_2020/exercice-1/mySoftwareTestAndSet").function("getProducerCount").return {
+probe process("../mySoftwareTestAndSet").function("getProducerCount").return {
   t = tid();
   ts = thread_blocktime[t];
   if (ts) {
