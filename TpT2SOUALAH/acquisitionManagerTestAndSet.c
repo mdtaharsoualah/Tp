@@ -12,6 +12,7 @@
 #include "debug.h"
 #include <sys/types.h>
 #include <sys/syscall.h>
+#include <stdatomic.h>
 
 
 //producer count storage
