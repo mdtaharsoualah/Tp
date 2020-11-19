@@ -84,10 +84,10 @@ int BufferWriteId(MSG_BLOCK msg){
 	int p = 0;
 	sem_wait(&bufferPrisSemaphores);
 	sem_post(&bufferLibreSemaphores);
-	pthread_mutex_lock(&produceCountMutex);
+	pthread_mutex_lock(&bufferMutex);
 		p=BufferIdWrite;
 		BufferIdWrite=(BufferIdWrite==255) ? 0 : BufferIdWrite+1;
-	pthread_mutex_unlock(&produceCountMutex);
+	pthread_mutex_unlock(&bufferMutex);
 	Buffer[p]=msg;
 	return p;
 }
@@ -95,10 +95,10 @@ int BufferWriteId(MSG_BLOCK msg){
 int ReadAcquisMessage(MSG_BLOCK* msg){
 	MSG_BLOCK tmpMsg;
 	sem_wait(&bufferLibreSemaphores);
-	pthread_mutex_lock(&produceCountMutex);
+	pthread_mutex_lock(&bufferMutex);
 		tmpMsg=Buffer[BufferIdRead];
 		BufferIdRead=(BufferIdRead==255) ? 0 : BufferIdRead+1;
-	pthread_mutex_unlock(&produceCountMutex);
+	pthread_mutex_unlock(&bufferMutex);
 	sem_post(&bufferPrisSemaphores);
 	*msg=tmpMsg;
 	return BufferIdRead-1;
