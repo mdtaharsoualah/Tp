@@ -84,7 +84,7 @@ unsigned int getProducerCount(void)
 	unsigned int p = 0;
 	pCountLockTake();
 	p=produceCount;
-	CountLockRelease()
+	CountLockRelease();
 	return p;
 }
 
