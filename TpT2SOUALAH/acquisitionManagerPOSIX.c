@@ -82,25 +82,26 @@ unsigned int getProducerCount(void)
 
 int BufferWriteId(MSG_BLOCK msg){
 	int p = 0;
-	sem_wait(&bufferPrisSemaphores);
-	sem_post(&bufferLibreSemaphores);
+	sem_wait(&bufferLibreSemaphores);
 	pthread_mutex_lock(&bufferMutex);
 		p=BufferIdWrite;
 		BufferIdWrite=(BufferIdWrite==255) ? 0 : BufferIdWrite+1;
 	pthread_mutex_unlock(&bufferMutex);
 	Buffer[p]=msg;
+	sem_post(&bufferPrisSemaphores);
 	return p;
 }
 
 int ReadAcquisMessage(MSG_BLOCK* msg){
 	MSG_BLOCK tmpMsg;
-	sem_wait(&bufferLibreSemaphores);
+	sem_wait(&bufferPrisSemaphores);
 	pthread_mutex_lock(&bufferMutex);
 		tmpMsg=Buffer[BufferIdRead];
 		BufferIdRead=(BufferIdRead==255) ? 0 : BufferIdRead+1;
 	pthread_mutex_unlock(&bufferMutex);
-	sem_post(&bufferPrisSemaphores);
+	
 	*msg=tmpMsg;
+	sem_post(&bufferLibreSemaphores);
 	return BufferIdRead-1;
 }
 
@@ -115,7 +116,7 @@ unsigned int acquisitionManagerInit(void)
 	
 	printf("[acquisitionManager]Synchronization initialization done.\n");
 
-	for (i = 0; i < PRODUCER_COUNT; i++)
+	for (i = 1; i <= PRODUCER_COUNT; i++)
 	{
 		//Start the 4 thread
 		pthread_create(&producers[i],NULL,&produce,i);

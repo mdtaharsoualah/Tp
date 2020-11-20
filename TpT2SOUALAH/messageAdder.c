@@ -51,7 +51,8 @@ static void *sum( void *parameters );
 static void CalculSum(MSG_BLOCK *msg)
 {
 	pthread_mutex_lock(&SumMutex);
-	messageAdd(&out, msg);
+	if(messageCheck(msg))
+		messageAdd(&out, msg);
 	pthread_mutex_unlock(&SumMutex);
 	incrementConsumeCount();
 }
