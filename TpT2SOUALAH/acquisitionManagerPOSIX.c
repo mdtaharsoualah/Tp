@@ -89,7 +89,7 @@ int BufferWriteId(MSG_BLOCK msg){
 	pthread_mutex_unlock(&bufferMutex);
 	Buffer[p]=msg;
 	sem_post(&bufferPrisSemaphores);
-	printf("Message Recu\n");
+	//printf("Message Recu\n");
 	return p;
 }
 
@@ -103,7 +103,7 @@ int ReadAcquisMessage(MSG_BLOCK* msg){
 	
 	*msg=tmpMsg;
 	sem_post(&bufferLibreSemaphores);
-	printf("Message Lu\n");
+	//printf("Message Lu\n");
 	return BufferIdRead-1;
 }
 

@@ -35,12 +35,14 @@ static void *display( void *parameters )
 	unsigned int displayId = syscall(SYS_gettid);
 	D(printf("[displayManager]Thread created for display with id %d\n", displayId));
 	unsigned int diffCount = 0;
-	while(diffCount < DISPLAY_LOOP_LIMIT){
+	int difFlag = False;
+	while(diffCount > 0 || !difFlag){
 		sleep(DISPLAY_SLEEP_TIME);
 		getSum(&tmpOut);
 		ConsumeCount=getConsumeCount();
 		ProducerCount= getProducerCount();
 		diffCount=ProducerCount-ConsumeCount;
+		difFlag=(diffCount==0) ? true : false;
 		messageDisplay(&tmpOut);
 		printf("Messages recu : %4d  Messages somme : %4d Messages Restant : %4d \n", ProducerCount, ConsumeCount, diffCount);
 
