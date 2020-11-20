@@ -145,7 +145,7 @@ void *produce(void* params)
 	int BufId=-1;
 	MSG_BLOCK tmpMsg;
 	unsigned int produceId = syscall(SYS_gettid);
-	D(printf("[acquisitionManager]Producer created with id %d \n", produceId));
+	printf("[acquisitionManager]Producer created with id %d \n", produceId);
 	unsigned int i = 0;
 	while (i < PRODUCER_LOOP_LIMIT)
 	{
@@ -156,7 +156,7 @@ void *produce(void* params)
 		getInput((int) params,&tmpMsg);
 		BufId=BufferWriteId(tmpMsg);
 		incrementProducerCount();
-		//printf("[acquisitionManager] %d a recu un message stocké a %d\n", produceId, BufId);
+		printf("[acquisitionManager] %d a recu un message stocké a %d\n", produceId, BufId);
 		
 	}
 	
