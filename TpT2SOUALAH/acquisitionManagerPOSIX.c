@@ -52,8 +52,8 @@ static void incrementProducerCount(void);
 static unsigned int createSynchronizationObjects(void)
 {
 	//Initialisation Semaphores
-	if(sem_init(&bufferLibreSemaphores,0,0) != -1){
-		if(sem_init(&bufferPrisSemaphores,0,256) != -1){
+	if(sem_init(&bufferLibreSemaphores,0,256) != -1){
+		if(sem_init(&bufferPrisSemaphores,0,0) != -1){
 			printf("[acquisitionManager]Semaphore created\n");
 			return ERROR_SUCCESS;
 		}
