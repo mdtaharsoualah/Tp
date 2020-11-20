@@ -11,7 +11,7 @@
 //The number of second the producer shall sleep
 #define PRODUCER_SLEEP_TIME 1
 //The number producer iterations
-#define PRODUCER_LOOP_LIMIT 4
+#define PRODUCER_LOOP_LIMIT 10
 //The number of second the display shall sleep
 #define DISPLAY_SLEEP_TIME  3
 //The number display iterations
